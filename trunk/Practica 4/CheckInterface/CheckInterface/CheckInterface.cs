@@ -52,11 +52,16 @@ namespace CheckInterface
 
         private void cambiarEstado(int estado)
         {
+            EDigAuxiliar.BackColor = Color.Red;
+            EDigAuxiliar.Text = "0";
             // Valores de estado: 0(ok) - 1(error)
             if (estado == 0)
             { // La interfaz está conectada
-                EDigAuxiliar.BackColor = Color.Red;
-                EDigAuxiliar.Text = "0";
+                // Indicamos en la variable de control que la interfaz está encendida
+                this.encendido = true;
+                // Activamos el timer que dispara la lectura de las entradas
+                timerEntradas.Enabled = true;
+                // Configuramos el interfaz a su estado de START
                 this.tsIcono.Image = global::CheckInterface.Properties.Resources.gtk_yes;
                 this.tsIcono.Size = new System.Drawing.Size(16, 16);
                 tsBarraEstado.Text = "Interfaz conectada...";
@@ -67,8 +72,13 @@ namespace CheckInterface
             }
             if (estado == 1)
             { // La interfaz NO está conectada
-                EDigAuxiliar.BackColor = Color.Red;
-                EDigAuxiliar.Text = "0";
+                // Cerramos la conexión con la interfaz
+                this.fish.CloseInterface();
+                // Paramos el timer que dispara la lectura de las entradas
+                timerEntradas.Enabled = false;
+                // Indicamos en la variable de control que la interfaz no esta encendida
+                this.encendido = false;
+                // Configuramos el interfaz a su estado de STOP
                 this.tsIcono.Image = global::CheckInterface.Properties.Resources.gtk_no;
                 this.tsIcono.Size = new System.Drawing.Size(16, 16);
                 tsBarraEstado.Text = "La interfaz no está conectada...";
@@ -181,10 +191,10 @@ namespace CheckInterface
             }
             catch (FishFaceException)
             {
-                encendido = false;
-                timerEntradas.Enabled = false;
+                //this.encendido = false;
+                //timerEntradas.Enabled = false;
                 cambiarEstado(1);
-                fish.CloseInterface();
+                //this.fish.CloseInterface();
             }
         }
 
@@ -196,16 +206,16 @@ namespace CheckInterface
                 {
                     fish.OpenInterface(Port.COM1);
                     cambiarEstado(0);
-                    encendido = true;
-                    timerEntradas.Enabled = true;
+                    //this.encendido = true;
+                    //timerEntradas.Enabled = true;
                 }
             }
             catch (FishFaceException)
             {
-                encendido = false;
-                timerEntradas.Enabled = false;
+                //this.encendido = false;
+                //timerEntradas.Enabled = false;
                 cambiarEstado(1);
-                fish.CloseInterface();
+                //this.fish.CloseInterface();
             }
         }
 
