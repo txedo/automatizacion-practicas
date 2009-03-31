@@ -641,7 +641,7 @@
             // 
             this.salirMenuItem.Image = global::CheckInterface.Properties.Resources.gtk_quit;
             this.salirMenuItem.Name = "salirMenuItem";
-            this.salirMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salirMenuItem.Size = new System.Drawing.Size(105, 22);
             this.salirMenuItem.Text = "Salir";
             this.salirMenuItem.Click += new System.EventHandler(this.salirMenuItem_Click);
             // 
@@ -673,8 +673,9 @@
             // 
             this.acercaDeToolStripMenuItem.Image = global::CheckInterface.Properties.Resources.gtk_about;
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.acercaDeToolStripMenuItem.Text = "Acerca de...";
+            this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.acercaDeToolStripMenuItem_Click);
             // 
             // menuStrip
             // 

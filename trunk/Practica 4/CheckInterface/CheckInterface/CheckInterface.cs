@@ -223,5 +223,11 @@ namespace CheckInterface
         {
             this.Dispose();
         }
+
+        private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.ShowDialog();
+        }
     }
 }
