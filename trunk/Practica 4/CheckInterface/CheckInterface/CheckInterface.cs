@@ -147,13 +147,15 @@ namespace CheckInterface
             {
                 if (this.Puerto != conf.getPuerto())
                 {
-                    this.encendido = false;
-                    fish.CloseInterface();
+                    cambiarEstado(1);
                     this.Puerto = conf.getPuerto();
                     try
                     {
-                        fish.OpenInterface(this.Puerto);
-                        this.encendido = true;
+                        if (!this.encendido)
+                        {
+                            fish.OpenInterface(this.Puerto);
+                            cambiarEstado(0);
+                        }
                     }
                     catch (FishFaceException)
                     {
@@ -216,7 +218,7 @@ namespace CheckInterface
         {
             try
             {
-                if (!encendido)
+                if (!this.encendido)
                 {
                     fish.OpenInterface(this.Puerto);
                     cambiarEstado(0);
