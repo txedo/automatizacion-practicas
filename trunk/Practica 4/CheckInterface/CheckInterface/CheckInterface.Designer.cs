@@ -131,11 +131,11 @@
             // EDigAuxiliar
             // 
             this.EDigAuxiliar.AutoSize = true;
-            this.EDigAuxiliar.Location = new System.Drawing.Point(50, 262);
+            this.EDigAuxiliar.Location = new System.Drawing.Point(6, 262);
             this.EDigAuxiliar.Name = "EDigAuxiliar";
-            this.EDigAuxiliar.Size = new System.Drawing.Size(41, 13);
+            this.EDigAuxiliar.Size = new System.Drawing.Size(66, 13);
             this.EDigAuxiliar.TabIndex = 20;
-            this.EDigAuxiliar.Text = "label33";
+            this.EDigAuxiliar.Text = "inv aux label";
             this.EDigAuxiliar.Visible = false;
             // 
             // E8Label
@@ -673,7 +673,7 @@
             // 
             this.acercaDeToolStripMenuItem.Image = global::CheckInterface.Properties.Resources.gtk_about;
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.acercaDeToolStripMenuItem.Text = "Acerca de...";
             this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.acercaDeToolStripMenuItem_Click);
             // 
