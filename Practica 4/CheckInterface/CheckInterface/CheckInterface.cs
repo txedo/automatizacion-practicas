@@ -20,6 +20,11 @@ namespace CheckInterface
 
         public CheckInterface()
         {
+            // Inicializamos los atributos con los valores por defecto
+            this.encendido = false;
+            this.Puerto = Port.COM1;
+            this.rateIface = 500;
+            this.rateInputs = 10;
             InitializeComponent();
         }
 
@@ -39,11 +44,6 @@ namespace CheckInterface
             EYProgressBar.Value = min;
             // Auxiliares
             EDigAuxiliar.Visible = false;
-            // Inicializamos los atributos con los valores por defecto
-            this.encendido = false;
-            this.Puerto = Port.COM1;
-            this.rateIface = 500;
-            this.rateInputs = 10;
             // Inicializamos los timers con los valores por defecto
             timerCheckInterface.Interval = this.rateIface;
             timerCheckInterface.Enabled = true;
@@ -72,12 +72,12 @@ namespace CheckInterface
             }
             if (estado == 1)
             { // La interfaz NO está conectada
-                // Cerramos la conexión con la interfaz
-                this.fish.CloseInterface();
-                // Paramos el timer que dispara la lectura de las entradas
-                timerEntradas.Enabled = false;
                 // Indicamos en la variable de control que la interfaz no esta encendida
                 this.encendido = false;
+                // Paramos el timer que dispara la lectura de las entradas
+                timerEntradas.Enabled = false;
+                // Cerramos la conexión con la interfaz
+                this.fish.CloseInterface();
                 // Configuramos el interfaz a su estado de STOP
                 this.tsIcono.Image = global::CheckInterface.Properties.Resources.gtk_no;
                 this.tsIcono.Size = new System.Drawing.Size(16, 16);
@@ -145,7 +145,21 @@ namespace CheckInterface
             conf.ShowDialog();
             if (conf.estaConfigurado())
             {
-                this.Puerto = conf.getPuerto();
+                if (this.Puerto != conf.getPuerto())
+                {
+                    this.encendido = false;
+                    fish.CloseInterface();
+                    this.Puerto = conf.getPuerto();
+                    try
+                    {
+                        fish.OpenInterface(this.Puerto);
+                        this.encendido = true;
+                    }
+                    catch (FishFaceException)
+                    {
+                        cambiarEstado(1);
+                    }
+                }
                 this.rateIface = conf.getRefrescoInterfaz();
                 this.rateInputs = conf.getRefrescoEntradas();
                 timerCheckInterface.Interval = this.rateIface;
@@ -178,23 +192,23 @@ namespace CheckInterface
         {
             try
             {
-                cambiarEstadoEntradaDigital(Nr.E1, E1Label);
-                cambiarEstadoEntradaDigital(Nr.E2, E2Label);
-                cambiarEstadoEntradaDigital(Nr.E3, E3Label);
-                cambiarEstadoEntradaDigital(Nr.E4, E4Label);
-                cambiarEstadoEntradaDigital(Nr.E5, E5Label);
-                cambiarEstadoEntradaDigital(Nr.E6, E6Label);
-                cambiarEstadoEntradaDigital(Nr.E7, E7Label);
-                cambiarEstadoEntradaDigital(Nr.E8, E8Label);
-                cambiarEstadoEntradaAnalogica(Nr.EX, EXProgressBar);
-                cambiarEstadoEntradaAnalogica(Nr.EY, EYProgressBar);
+                if (this.encendido)
+                {
+                    cambiarEstadoEntradaDigital(Nr.E1, E1Label);
+                    cambiarEstadoEntradaDigital(Nr.E2, E2Label);
+                    cambiarEstadoEntradaDigital(Nr.E3, E3Label);
+                    cambiarEstadoEntradaDigital(Nr.E4, E4Label);
+                    cambiarEstadoEntradaDigital(Nr.E5, E5Label);
+                    cambiarEstadoEntradaDigital(Nr.E6, E6Label);
+                    cambiarEstadoEntradaDigital(Nr.E7, E7Label);
+                    cambiarEstadoEntradaDigital(Nr.E8, E8Label);
+                    cambiarEstadoEntradaAnalogica(Nr.EX, EXProgressBar);
+                    cambiarEstadoEntradaAnalogica(Nr.EY, EYProgressBar);
+                }
             }
             catch (FishFaceException)
             {
-                //this.encendido = false;
-                //timerEntradas.Enabled = false;
                 cambiarEstado(1);
-                //this.fish.CloseInterface();
             }
         }
 
@@ -204,18 +218,13 @@ namespace CheckInterface
             {
                 if (!encendido)
                 {
-                    fish.OpenInterface(Port.COM1);
+                    fish.OpenInterface(this.Puerto);
                     cambiarEstado(0);
-                    //this.encendido = true;
-                    //timerEntradas.Enabled = true;
                 }
             }
             catch (FishFaceException)
             {
-                //this.encendido = false;
-                //timerEntradas.Enabled = false;
                 cambiarEstado(1);
-                //this.fish.CloseInterface();
             }
         }
 
