@@ -21,8 +21,9 @@ namespace Secamanos
             {
                 // Instanciamos el interfaz FishFace
                 FishFace fish = new FishFace();
+                fish.OpenInterface(Port.COM1);
                 // Encendemos la lámpara
-                fish.SetLamp(Nr.M1, Dir.On);
+                fish.SetMotor(Nr.M1, Dir.On);
                 Console.WriteLine("Iniciando el sistema...");
                 // Esperamos un segundo para que se encienda la lámpara
                 fish.Pause(1000);
