@@ -38,6 +38,7 @@ namespace SecamanosTextMode
                     }
                     else if (echo)
                     {
+                        // Si no se detecta la luz realizamos el retardo
                         fish.Pause(5000);
                         fish.SetMotor(Nr.M2, Dir.Off);
                         echo = false;
