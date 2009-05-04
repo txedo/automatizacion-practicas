@@ -27,7 +27,7 @@ namespace Parking
 
         // Variables de control
         public static int capacidadActual = 0;
-        public static int capacidadMaxima = 3;
+        public static int capacidadMaxima = 2;
         public static int deadline = 5;
         public static Boolean parkingLleno = false;
 
@@ -92,6 +92,7 @@ namespace Parking
                         else
                         {
                             Console.WriteLine("Parking lleno");
+                            fish.Pause(500);
                         }
                     }
                     pulsadorDetectado = fish.GetInput(pulsadorSalida);
@@ -105,7 +106,7 @@ namespace Parking
                         fin = DateTime.Now;
                         while (((fin - inicio).Seconds < deadline) && !fuera)
                         {
-                            if (fish.GetInput(celulaAcceso)) fuera = true;
+                            if (!fish.GetInput(celulaAcceso)) fuera = true;
                             fin = DateTime.Now;
                         }
                         if (fuera)
